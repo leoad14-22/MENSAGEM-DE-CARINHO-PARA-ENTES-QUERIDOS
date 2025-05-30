@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens de Amor ✨</title>
+    <meta name="description" content="Surpreenda com mensagens de amor especiais! Clique nos balões para descobrir frases românticas e compartilhe carinho com quem você ama.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <meta property="og:title" content="Mensagens de Amor ✨">
+    <meta property="og:description" content="Surpreenda com mensagens de amor especiais! Clique nos balões para descobrir frases românticas e compartilhe carinho com quem você ama.">
+    <meta property="og:image" content="URL_DA_SUA_IMAGEM_DE_PREVIEW.png"> <meta property="og:url" content="URL_DA_SUA_PAGINA.com"> <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+</head>
+<body>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <div class="romantic-particles" id="particles" aria-hidden="true"></div>
+
+    <div class="balloon-counter" id="balloonCounter" aria-live="polite">
+        🎈 Balões: 0
+    </div>
+
+    <header class="title fade-in">
+        <h1>💕 Mensagens do Coração 💕</h1>
+        <p>Cada balão guarda um sentimento especial para você</p>
+    </header>
+
+    <main>
+        <section class="love-quote fade-in" role="region" aria-labelledby="quote-heading">
+            <h2 id="quote-heading" class="sr-only">Citação de Amor</h2>
+            "O amor é a única força capaz de transformar um inimigo em amigo." <br> - Martin Luther King Jr.
+        </section>
+
+        <section class="instructions" role="region" aria-labelledby="instructions-heading">
+            <h2 id="instructions-heading" class="sr-only">Instruções</h2>
+            ✨ Clique nos balões flutuantes para descobrir mensagens românticas ✨<br>
+            <small>💝 Compartilhe as mensagens que tocarem seu coração</small>
+        </section>
+    </main>
+
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="messageTitle" aria-hidden="true"></div>
+    <div class="message" id="message" role="alertdialog" aria-modal="true" aria-labelledby="messageTitle" aria-hidden="true">
+        <div class="message-icon" aria-hidden="true">💖</div>
+        <h2 id="messageTitle"></h2>
+        <p id="messageText"></p>
+        <div class="message-buttons">
+            <button class="btn close-btn" onclick="closeMessage()">💖 Fechar</button>
+            <button class="btn share-btn" onclick="shareMessage()">🔗 Compartilhar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
