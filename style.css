@@ -1,0 +1,522 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap');
+
+/* Variáveis CSS para fácil manutenção */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --heart-color: #ff6b9d;
+    --text-shadow-light: 2px 2px 10px rgba(0,0,0,0.3);
+    --text-shadow-dark: 1px 1px 5px rgba(0,0,0,0.5);
+    --bg-color-overlay: rgba(0,0,0,0.6);
+    --transition-speed: 0.3s;
+    --border-radius-large: 25px;
+    --border-radius-small: 30px;
+    --font-family-title: 'Great Vibes', cursive;
+    --font-family-body: 'Poppins', sans-serif;
+    --message-bg-gradient: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+    --message-border-gradient: linear-gradient(45deg, #ff6b9d, #a8edea, #fed6e3, #ffeaa7);
+    --btn-primary-gradient: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    --btn-secondary-gradient: linear-gradient(135deg, #a8edea, #fed6e3);
+
+    /* Nova variável para largura máxima do conteúdo central */
+    --content-max-width: 960px; /* Ajuste conforme preferir */
+    --text-color-light: white; /* Adicionada: Define a cor do texto padrão para branco */
+    --text-color-dark: #333; /* Adicionada: Uma cor mais escura para contraste em fundos claros */
+}
+
+/* Reset básico e estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Para rolagem suave se adicionar âncoras futuras */
+}
+
+body {
+    min-height: 100vh;
+    background: var(--primary-gradient);
+    overflow: hidden; /* Mantido para a animação dos balões */
+    font-family: var(--font-family-body);
+    position: relative;
+    color: var(--text-color-light); /* Cor de texto padrão para o corpo */
+
+    /* ***** NOVAS REGRAS PARA CENTRALIZAR O CONTEÚDO PRINCIPAL ***** */
+    display: flex;
+    flex-direction: column; /* Organiza os filhos em coluna */
+    align-items: center;    /* Centraliza horizontalmente os filhos */
+    justify-content: center; /* Centraliza verticalmente o conteúdo (se houver espaço) */
+    text-align: center;      /* Garante que o texto dentro dos filhos também seja centralizado */
+    /* *************************************************************** */
+}
+
+/* Acessibilidade - Esconder visualmente, mas manter para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Partículas românticas flutuantes e Estrelas */
+.romantic-particles,
+.stars {
+    position: fixed; /* Mudei para fixed para garantir que cubram toda a viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1; /* Estrelas um pouco mais ao fundo */
+}
+
+.stars {
+    z-index: 0; /* Certifique-se de que as estrelas estão abaixo das partículas */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.7), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 25s linear infinite;
+    will-change: transform;
+}
+
+@keyframes sparkle {
+    from { transform: translateX(0); }
+    to { transform: translateX(-200px); }
+}
+
+.particle {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2em;
+    animation: particleFloat 15s linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+/* Título, Citação, Instruções e Contador - Agora gerenciados por flexbox no body */
+.title {
+    z-index: 1000;
+    color: var(--text-color-light);
+    text-shadow: var(--text-shadow-light);
+    width: 90%; 
+    max-width: var(--content-max-width); /* Limita a largura */
+    margin-top: 40px; /* Garante algum espaçamento do topo */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    flex-shrink: 0; /* Impede que o título encolha demais */
+    pointer-events: none; /* PERMITE CLIQUE ATRAVÉS DO TEXTO */
+}
+
+.title h1 {
+    font-family: var(--font-family-title);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 400;
+    margin-bottom: 15px;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+    background: linear-gradient(45deg, #fff, #ffeaa7, #ff7675, #fd79a8);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title p {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    opacity: 0.95;
+    font-weight: 400;
+    text-shadow: var(--text-shadow-dark);
+}
+
+@keyframes titleGlow {
+    0% { 
+        text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% { 
+        text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(255,107,157,0.3);
+        background-position: 0% 50%;
+    }
+}
+
+.balloon-counter {
+    position: absolute; /* Mantido absoluto para o canto superior direito */
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: var(--border-radius-large);
+    color: white;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza conteúdo de main */
+    justify-content: center; /* Centraliza verticalmente dentro de main */
+    flex-grow: 1; /* Permite que main ocupe o espaço restante */
+    width: 100%;
+    max-width: var(--content-max-width); /* Limita a largura do conteúdo principal */
+    padding: 0 20px; /* Adiciona padding lateral */
+    z-index: 100; /* Acima das partículas, abaixo de modais */
+}
+
+.love-quote {
+    color: rgba(255,255,255,0.9);
+    font-style: italic;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    opacity: 0.9;
+    margin-top: 20px; /* Espaçamento do elemento acima */
+    margin-bottom: 20px; /* Espaçamento do elemento abaixo */
+    line-height: 1.5; /* Melhorar legibilidade */
+    max-width: 600px; /* Limita a largura para melhor leitura */
+    pointer-events: none; /* PERMITE CLIQUE ATRAVÉS DO TEXTO */
+}
+
+.instructions {
+    color: rgba(255,255,255,0.9);
+    font-weight: 400;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    animation: pulse 3s ease-in-out infinite;
+    margin-top: 20px; /* Espaçamento do elemento acima */
+    margin-bottom: 40px; /* Garante algum espaçamento da parte inferior */
+    max-width: 600px; /* Limita a largura para melhor leitura */
+    pointer-events: none; /* PERMITE CLIQUE ATRAVÉS DO TEXTO */
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Balões - Mantidos absolutos, mas com ajuste de posicionamento */
+.balloon {
+    position: absolute; /* Balões precisam ser absolutos para flutuar */
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+    animation: float 8s ease-in-out infinite;
+    z-index: 1000; /* Z-INDEX AUMENTADO PARA GARANTIR CLICABILIDADE SOBRE OUTROS ELEMENTOS NÃO MODAIS */
+    touch-action: manipulation;
+    will-change: transform;
+}
+
+.balloon:hover,
+.balloon:focus {
+    transform: scale(1.15);
+    filter: brightness(1.1) drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    outline: 2px solid rgba(255,255,255,0.7);
+    outline-offset: 4px;
+}
+
+.balloon-body {
+    width: clamp(70px, 12vw, 85px);
+    height: clamp(90px, 15vw, 110px);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+    box-shadow: 
+        0 8px 25px rgba(0,0,0,0.2),
+        inset -10px -10px 0 rgba(0,0,0,0.1),
+        inset 10px 10px 0 rgba(255,255,255,0.2);
+    background-size: 100% 100%;
+}
+
+.balloon-shine {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 20px;
+    height: 35px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    filter: blur(8px);
+}
+
+.balloon-string {
+    width: 2px;
+    height: clamp(120px, 20vw, 180px);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.3));
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    animation: sway 4s ease-in-out infinite;
+    box-shadow: 1px 0 2px rgba(0,0,0,0.1);
+    transform-origin: top center;
+    will-change: transform;
+}
+
+/* Animação 'float' para fazer os balões subirem */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg); /* Início da animação (na posição inicial do balão) */
+        opacity: 0.8; /* Balão ligeiramente transparente no início */
+    }
+    25% {
+        transform: translateY(-30vh) rotate(5deg); /* Sobe um pouco, com pequena oscilação */
+        opacity: 1; /* Balão totalmente visível */
+    }
+    50% {
+        transform: translateY(-60vh) rotate(-5deg); /* Sobe mais, com oscilação no outro sentido */
+    }
+    75% {
+        transform: translateY(-90vh) rotate(5deg); /* Quase no topo, com mais oscilação */
+    }
+    100% {
+        transform: translateY(-120vh) rotate(0deg); /* Balão sai completamente da tela pelo topo */
+        opacity: 0; /* Balão desaparece suavemente */
+    }
+}
+
+@keyframes sway {
+    0%, 100% { transform: translateX(-50%) rotate(3deg); }
+    50% { transform: translateX(-50%) rotate(-3deg); }
+}
+
+/* Modal de Mensagem */
+.message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: var(--message-bg-gradient);
+    padding: clamp(30px, 8vw, 40px) clamp(30px, 8vw, 45px);
+    border-radius: var(--border-radius-large);
+    box-shadow: 
+        0 25px 80px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    text-align: center;
+    z-index: 3000;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255,255,255,0.3);
+    max-width: 450px;
+    min-width: 280px;
+    width: 90%;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    visibility: hidden;
+}
+
+.message::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--message-border-gradient);
+    border-radius: 27px;
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.message.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.message-icon {
+    font-size: clamp(2rem, 7vw, 3rem);
+    margin-bottom: 20px;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.message h2 {
+    font-family: var(--font-family-title);
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    background: linear-gradient(45deg, #e91e63, #f06292, #ba68c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.message p {
+    font-size: clamp(1rem, 3.5vw, 1.15rem);
+    color: var(--text-color-dark);
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.message-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    padding: 14px 28px;
+    border-radius: var(--border-radius-small);
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-weight: 500;
+    font-family: var(--font-family-body);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.close-btn {
+    background: var(--btn-primary-gradient);
+    color: white;
+}
+
+.share-btn {
+    background: var(--btn-secondary-gradient);
+    color: var(--text-color-dark);
+}
+
+.btn:hover,
+.btn:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    outline: 2px solid rgba(255,255,255,0.7);
+    outline-offset: 2px;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color-overlay);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(5px);
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pop-effect {
+    animation: balloonPop 0.8s ease-out;
+}
+
+@keyframes balloonPop {
+    0% { 
+        transform: scale(1); 
+        opacity: 1;
+    }
+    30% { 
+        transform: scale(1.4); 
+        opacity: 0.8;
+    }
+    100% { 
+        transform: scale(0); 
+        opacity: 0;
+    }
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: heartFloat 4s ease-out forwards;
+    pointer-events: none;
+    z-index: 100;
+    will-change: transform, opacity;
+}
+
+@keyframes heartFloat {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120px) scale(0.3) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Animação de entrada da página */
+.fade-in {
+    animation: fadeIn 2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Media query para telas muito pequenas */
+@media (max-width: 480px) {
+    /* Pode ser útil para ajustar margens ou padding muito apertados */
+    .title {
+        margin-top: 20px;
+    }
+    .love-quote, .instructions {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
